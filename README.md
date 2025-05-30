@@ -1,24 +1,6 @@
 Active Directory - Gestion pour l'association "Pour les vieux"
 Implémentation complète d'AD avec PowerShell, GPO et réplication
 
-📁 Structure du dépôt
-/  
-│── /docs/  
-│   ├── Presentation_AD.pdf          # Document synthèse (PDF)  
-│   └── Matrice_Permissions.xlsx     # Matrice des droits (Excel)  
-│── /scripts/  
-│   ├── 01_Installation_AD.ps1       # Job 02 : Installation AD  
-│   ├── 02_Creation_Utilisateurs.ps1 # Job 02 : Import CSV  
-│   ├── 03_GPO_Lecteurs.ps1          # Job 05 : Montage lecteurs  
-│   ├── 04_Securite/                 # Job 04 : Scripts de monitoring  
-│   │   ├── Comptes_Inactifs.ps1  
-│   │   └── Alerte_MDP_Expiration.ps1  
-│   └── 05_Replication.ps1           # Job 07 : Config réplication  
-│── /gpo/                            # Export des stratégies de groupe  
-│── /screenshots/                    # Captures d'écran de validation  
-│── README.md                        # Ce fichier  
-└── LICENSE                          # Licence (MIT recommandée)  
-
 # 🏥 Active Directory - Association "Pour les vieux"  
 
 Ce projet démontre la mise en place d'un annuaire Active Directory pour une association gérant 4 établissements médico-sociaux.  
