@@ -1,85 +1,99 @@
-# 🧠 Active Directory - Présentation et Analyse
+Active Directory - Gestion pour l'association "Pour les vieux"
+Implémentation complète d'AD avec PowerShell, GPO et réplication
 
-## 📚 Table des matières
+📁 Structure du dépôt
+/  
+│── /docs/  
+│   ├── Presentation_AD.pdf          # Document synthèse (PDF)  
+│   └── Matrice_Permissions.xlsx     # Matrice des droits (Excel)  
+│── /scripts/  
+│   ├── 01_Installation_AD.ps1       # Job 02 : Installation AD  
+│   ├── 02_Creation_Utilisateurs.ps1 # Job 02 : Import CSV  
+│   ├── 03_GPO_Lecteurs.ps1          # Job 05 : Montage lecteurs  
+│   ├── 04_Securite/                 # Job 04 : Scripts de monitoring  
+│   │   ├── Comptes_Inactifs.ps1  
+│   │   └── Alerte_MDP_Expiration.ps1  
+│   └── 05_Replication.ps1           # Job 07 : Config réplication  
+│── /gpo/                            # Export des stratégies de groupe  
+│── /screenshots/                    # Captures d'écran de validation  
+│── README.md                        # Ce fichier  
+└── LICENSE                          # Licence (MIT recommandée)  
 
-- [Description](#description)
-- [Installation](#installation)
-  - [Prérequis](#prérequis)
-  - [Étapes d'installation](#étapes-dinstallation)
-- [Utilisation](#utilisation)
-- [Cas pratiques](#cas-pratiques)
-- [Contact](#contact)
+# 🏥 Active Directory - Association "Pour les vieux"  
 
----
+Ce projet démontre la mise en place d'un annuaire Active Directory pour une association gérant 4 établissements médico-sociaux.  
 
-## 📖 Description
+## 🎯 Objectifs  
+- Centraliser la gestion des identités (200+ utilisateurs).  
+- Appliquer des permissions granulaires (médical, compta, technique).  
+- Automatiser via PowerShell et GPO.  
 
-**Active Directory** est une solution de gestion des identités et des accès développée par **Microsoft**.  
-Elle permet d'organiser, sécuriser et administrer les ressources d'un réseau informatique de manière **centralisée**.
+## 🔧 Technologies  
+- **Windows Server 2025** (VM)  
+- **PowerShell 7+**  
+- **GPO** (Stratégies de Groupe)  
+- **LDAP** / **Kerberos**  
 
-🎯 **Objectif du projet** : Fournir une analyse approfondie du fonctionnement d'Active Directory, de ses avantages et de ses limites.
+## 🚀 Déploiement  
+1. **Installer AD** :  
+   ```powershell
+   .\scripts\01_Installation_AD.ps1 -DomainName "pourlesvieux.local"  
+Importer les utilisateurs :
 
----
+powershell
+.\scripts\02_Creation_Utilisateurs.ps1 -CsvPath ".\docs\utilisateurs.csv"  
+Appliquer les GPO :
 
-## 💿 Installation
+powershell
+.\scripts\03_GPO_Lecteurs.ps1  
+📊 Monitoring (Exemple)
+Alerte mots de passe
 
-### 🔧 Prérequis
+📚 Documentation
+Matrice des permissions
 
-- Un serveur ou une machine compatible avec **Active Directory** (Windows Server requis)
-- Une **image ISO** de Windows Server avec les fonctionnalités **AD DS (Active Directory Domain Services)**
-- Accès Internet pour télécharger les mises à jour
+Présentation AD
 
-### ⚙️ Étapes d'installation
+💡 Bonnes Pratiques
+Mots de passe : Forcer le changement au 1er login (Azerty06! par défaut).
 
-#### ✅ Étape 1 : Préparer l'environnement
+Audit : Scripts PowerShell pour détecter les anomalies.
 
-- Installer **Windows Server** sur le matériel ou une machine virtuelle
-- Configurer une **adresse IP fixe**
-- Renommer la machine selon les conventions de nommage
+Haute disponibilité : 2 contrôleurs de domaine avec réplication.
 
-#### ✅ Étape 2 : Installer le rôle Active Directory
+👨‍💻 Contributions : Les PR sont les bienvenues !
+📜 Licence : MIT - Libre d'utilisation et modification.
 
-- Ouvrir le **Gestionnaire de serveur**
-- Ajouter un rôle et sélectionner **"Services AD DS"**
-- Suivre l'assistant d'installation
-- **Redémarrer** la machine
-
-#### ✅ Étape 3 : Promouvoir le serveur en contrôleur de domaine
-
-- Lancer **l’Assistant de configuration d'Active Directory**
-- Choisir :
-  - "Ajouter une nouvelle forêt"  
-  _ou_
-  - Rejoindre un domaine existant
-- Configurer :
-  - Le **nom de domaine**
-  - Le **mot de passe DSRM**
-- **Redémarrer** pour finaliser l’installation
-
----
-
-## 🛠️ Utilisation
-
-Active Directory permet :
-
-- ✅ L'**authentification** et l’**autorisation** des utilisateurs
-- ✅ La **gestion centralisée** des stratégies de groupe (**GPO**)
-- ✅ Le **contrôle d’accès** aux ressources réseau
-- ✅ L’**intégration** avec des services Cloud comme **Azure AD**
 
 ---
 
-## 💼 Cas pratiques
+## 🔗 **Fichiers clés à fournir**  
+1. **Scripts PowerShell** :  
+   - Exemple pour `01_Installation_AD.ps1` :  
+     ```powershell
+     # Installer le rôle AD
+     Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
+     # Promouvoir en contrôleur de domaine
+     Install-ADDSForest -DomainName "pourlesvieux.local" -InstallDns:$true -Force:$true
+     ```  
 
-### 🎯 Exemple : Gestion des accès dans une entreprise
+2. **Matrice des permissions** (Excel) :  
+   - Colonnes : `Dossier | Groupe | Permission | Département`.  
 
-Un administrateur système utilise **Active Directory** pour :
-
-- Créer et gérer des **comptes utilisateurs** et **groupes**
-- Appliquer des **stratégies de sécurité** via **GPO**
-- Automatiser le **déploiement d’applications**
-- Surveiller et **auditer l’activité réseau**
-
-✅ **Résultat** : Une **infrastructure sécurisée** et **simplifiée** pour la gestion des accès et des ressources.
+3. **Documentation PDF** :  
+   - Résume les sections I à IV de votre demande originale.  
 
 ---
+
+## ✅ Validation  
+- **Tests** :  
+  - Vérifier la réplication entre les 2 DCs avec `repadmin /showrepl`.  
+  - Tester les accès aux dossiers partagés (ex : `\\serveur\medical`).   
+
+---
+
+### 🌟 Pourquoi ce projet ?  
+- **Professionnel** : Montre votre maîtrise d'AD, PowerShell, et la gestion de projets IT complexes.  
+- **Open Source** : Peut être réutilisé par d'autres associations.  
+
+
